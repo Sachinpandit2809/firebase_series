@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "871702660880",
+    "project_id": "fir-series-dbdee",
+    "storage_bucket": "fir-series-dbdee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:871702660880:android:828565224ef052c3bc8795",
+        "android_client_info": {
+          "package_name": "com.example.firebase_series"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVzjK1nFoKjObk2OFYt0r2bHp8Gu-SOXk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
