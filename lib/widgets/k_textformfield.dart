@@ -1,7 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
+// ignore: must_be_immutable
 class KTextformfield extends StatefulWidget {
   String hintText;
   TextEditingController controller;
@@ -22,6 +21,7 @@ class _KTextformfieldState extends State<KTextformfield> {
     return TextFormField(
       controller: widget.controller,
       keyboardType: widget.keyboard,
+      // ignore: prefer_const_constructors
       style: TextStyle(color: Colors.blue),
       decoration: InputDecoration(
           labelText: widget.hintText,

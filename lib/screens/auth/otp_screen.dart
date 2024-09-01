@@ -6,6 +6,7 @@ import 'package:firebase_series/widgets/k_textformfield.dart';
 import 'package:firebase_series/widgets/round_button.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class OtpScreen extends StatefulWidget {
   String verificationId;
   OtpScreen({super.key, required this.verificationId});
@@ -28,22 +29,22 @@ class _OtpScreenState extends State<OtpScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
-            Text(
+            const Text(
               "Verification OTP",
               style: KTextStyle.K_24,
             ),
-            Text("We had sent a code in +91 99349****33"),
-            SizedBox(
+            const Text("We had sent a code in +91 99349****33"),
+            const SizedBox(
               height: 30,
             ),
             KTextformfield(
                 keyboard: TextInputType.number,
                 controller: otpController,
                 hintText: "otp"),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             RoundButton(
@@ -51,7 +52,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 onPress: () async {
                   try {
                     PhoneAuthCredential credential =
-                        await PhoneAuthProvider.credential(
+                        PhoneAuthProvider.credential(
                             verificationId: widget.verificationId,
                             smsCode: otpController.text.toString());
                     FirebaseAuth.instance
@@ -62,9 +63,15 @@ class _OtpScreenState extends State<OtpScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => HomepageScreen()));
+                              builder: (context) => const HomepageScreen()));
                     });
-                  } catch (e) {}
+                  } catch (e) {
+                    Utils().toastErrorMessage("Wrong Otp, try again?");
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (context) => const LoginScreen()));
+                  }
                 })
           ],
         ),

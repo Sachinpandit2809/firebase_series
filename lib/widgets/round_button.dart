@@ -1,8 +1,9 @@
 import 'package:firebase_series/resources/k_textstyle.dart';
+// ignore: unnecessary_import
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
+// ignore: must_be_immutable
 class RoundButton extends StatefulWidget {
   String title;
   VoidCallback onPress;
