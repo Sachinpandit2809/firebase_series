@@ -1,4 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_series/screens/auth/otp_screen.dart';
+import 'package:firebase_series/screens/auth/phone_number_screen.dart';
 import 'package:firebase_series/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

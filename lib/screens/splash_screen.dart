@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_series/screens/auth/login_screen.dart';
 import 'package:firebase_series/screens/homepage_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,11 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(
         Duration(seconds: 4),
         () => Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => LoginScreen())));
+            context,
+            MaterialPageRoute(
+                builder: (context) => FirebaseAuth.instance.currentUser == null
+                    ? LoginScreen()
+                    : HomepageScreen())));
     super.initState();
   }
 
@@ -28,9 +33,15 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-          child: Container(
+          child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("splash"),
+          Container(
               child: Lottie.network(
-                  'https://lottie.host/6275bb1d-3d64-4669-b72a-d46eebc23019/W4ko0JCHeb.json'))),
+                  'https://lottie.host/6275bb1d-3d64-4669-b72a-d46eebc23019/W4ko0JCHeb.json')),
+        ],
+      )),
     );
   }
 }
