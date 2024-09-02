@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_series/firebase_services/auth_service.dart';
 import 'package:firebase_series/resources/k_textstyle.dart';
+import 'package:firebase_series/resources/num_ext.dart';
 import 'package:firebase_series/screens/auth/login_screen.dart';
 import 'package:firebase_series/screens/homepage_screen.dart';
 import 'package:firebase_series/utils/utils.dart';
@@ -43,9 +44,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(
-                height: 80,
-              ),
+                          80.heightBox,
+
               const Center(
                 child: Text(
                   "Sign in !",
@@ -58,23 +58,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   style: KTextStyle.K_24,
                 ),
               ),
-              const SizedBox(
-                height: 30,
-              ),
+                          30.heightBox,
+
               KTextformfield(
                   controller: usernameController, hintText: "username"),
-              const SizedBox(
-                height: 30,
-              ),
+            30.heightBox,
+             
               KTextformfield(controller: emailController, hintText: "emial"),
-              const SizedBox(
-                height: 30,
-              ),
+            30.heightBox,
+             
               KTextformfield(
                   controller: passwordController, hintText: "password"),
-              const SizedBox(
-                height: 30,
-              ),
+            30.heightBox,
+             
               RoundButton(
                   title: "Signin",
                   onPress: () async {
@@ -108,9 +104,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
               //next
-              const SizedBox(
-                height: 10,
-              ),
+                         10.heightBox,
+
             ],
           ),
         ),

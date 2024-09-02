@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_series/resources/k_textstyle.dart';
+import 'package:firebase_series/resources/num_ext.dart';
 import 'package:firebase_series/screens/auth/otp_screen.dart';
 import 'package:firebase_series/utils/utils.dart';
 import 'package:firebase_series/widgets/k_textformfield.dart';
@@ -30,16 +31,14 @@ class _PhoneNumberScreenState extends State<PhoneNumberScreen> {
               "Enter Phone Number",
               style: KTextStyle.K_20,
             ),
-            SizedBox(
-              height: 30,
-            ),
+                       30.heightBox,
+
             KTextformfield(
                 keyboard: TextInputType.number,
                 controller: phoneController,
                 hintText: "phone"),
-            SizedBox(
-              height: 20,
-            ),
+                       20.heightBox,
+
             RoundButton(
                 title: "request OTP",
                 onPress: () async {

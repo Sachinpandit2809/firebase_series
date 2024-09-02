@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_series/firebase_services/auth_service.dart';
 import 'package:firebase_series/resources/k_textstyle.dart';
+import 'package:firebase_series/resources/num_ext.dart';
 import 'package:firebase_series/screens/auth/phone_number_screen.dart';
 import 'package:firebase_series/screens/auth/signup_screen.dart';
 import 'package:firebase_series/screens/homepage_screen.dart';
@@ -38,9 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: 80,
-                ),
+                80.heightBox,
                 Center(
                   child: Text(
                     "Login !",
@@ -53,19 +52,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: KTextStyle.K_24,
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
+                30.heightBox,
 
                 KTextformfield(controller: emailController, hintText: "email"),
-                const SizedBox(
-                  height: 30,
-                ),
+                30.heightBox,
                 KTextformfield(
                     controller: passwordController, hintText: "password"),
-                const SizedBox(
-                  height: 30,
-                ),
+                30.heightBox,
                 RoundButton(
                     title: "Login",
                     onPress: () async {
@@ -80,9 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 builder: (context) => HomepageScreen()));
                       }
                     }),
-                const SizedBox(
-                  height: 15,
-                ),
+                15.heightBox,
                 RoundButton(
                     title: "Google",
                     onPress: () async {
@@ -111,9 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       } catch (e) {}
                     }),
-                const SizedBox(
-                  height: 15,
-                ),
+                15.heightBox,
                 RoundButton(
                     title: "Log in with Phone",
                     onPress: () {
@@ -141,9 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 //next
-                SizedBox(
-                  height: 30,
-                ),
+                30.heightBox,
               ],
             ),
           ),

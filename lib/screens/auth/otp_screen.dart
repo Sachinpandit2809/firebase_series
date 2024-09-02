@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_series/resources/k_textstyle.dart';
+import 'package:firebase_series/resources/num_ext.dart';
 import 'package:firebase_series/screens/homepage_screen.dart';
 import 'package:firebase_series/utils/utils.dart';
 import 'package:firebase_series/widgets/k_textformfield.dart';
@@ -29,24 +30,19 @@ class _OtpScreenState extends State<OtpScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            const SizedBox(
-              height: 100,
-            ),
+            100.heightBox,
             const Text(
               "Verification OTP",
               style: KTextStyle.K_24,
             ),
             const Text("We had sent a code in +91 99349****33"),
-            const SizedBox(
-              height: 30,
-            ),
+            30.heightBox,
             KTextformfield(
                 keyboard: TextInputType.number,
                 controller: otpController,
                 hintText: "otp"),
-            const SizedBox(
-              height: 20,
-            ),
+                        20.heightBox,
+
             RoundButton(
                 title: "Verify OTP",
                 onPress: () async {
