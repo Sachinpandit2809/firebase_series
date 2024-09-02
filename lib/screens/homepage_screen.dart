@@ -1,10 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_series/db_services/database_services.dart';
 import 'package:firebase_series/resources/k_textstyle.dart';
 import 'package:firebase_series/resources/num_ext.dart';
 import 'package:firebase_series/screens/auth/login_screen.dart';
 import 'package:firebase_series/utils/utils.dart';
+import 'package:firebase_series/widgets/k_textformfield.dart';
 import 'package:firebase_series/widgets/material_buttons.dart';
+import 'package:firebase_series/widgets/round_button.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:uuid/uuid.dart';
 
 class HomepageScreen extends StatefulWidget {
   const HomepageScreen({super.key});
@@ -14,15 +22,102 @@ class HomepageScreen extends StatefulWidget {
 }
 
 class _HomepageScreenState extends State<HomepageScreen> {
+  TextEditingController todoController = TextEditingController();
   bool personal = true, office = false, college = false;
-  bool suggest = true;
+  // bool suggest = true;
+  Stream? todoStream;
+
+  Future goToTheLoad() async {
+    todoStream = await DatabaseServices().getTask(personal
+        ? "Personal"
+        : office
+            ? "Office"
+            : "College");
+    setState() {}
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  Widget getTask() {
+    return StreamBuilder(
+      //stream: FirebaseFirestore.instance.collection("Personal").snapshots(),
+      stream: todoStream,
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (!snapshot.hasData) {
+          Utils().toastErrorMessage("No data ");
+        }
+        return snapshot.hasData
+            ? Expanded(
+                child: ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  itemBuilder: (context, index) {
+                    DocumentSnapshot documentSnapshot =
+                        snapshot.data.docs[index];
+                    return Container(
+                      decoration: BoxDecoration(
+                          color: Colors.amber.shade100,
+                          borderRadius: BorderRadius.circular(12)),
+                      child: CheckboxListTile(
+                        activeColor: Color.fromARGB(255, 2, 150, 7),
+                        value: documentSnapshot['yes'],
+                        title: Row(
+                          children: [
+                            Text(documentSnapshot['task']),
+                            Spacer(),
+                            InkWell(
+                                onTap: () async {
+                                  await DatabaseServices().deleteMethod(
+                                      documentSnapshot['id'],
+                                      personal
+                                          ? 'Personal'
+                                          : college
+                                              ? 'College'
+                                              : 'Office');
+                                },
+                                child: const Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ))
+                          ],
+                        ),
+                        onChanged: (onChanged) async {
+                          await DatabaseServices().tickMethod(
+                              documentSnapshot['id'],
+                              personal
+                                  ? 'Personal'
+                                  : college
+                                      ? 'College'
+                                      : 'Office');
+                          setState(() {});
+                        },
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
+                    );
+                  },
+                ),
+              )
+            : SizedBox();
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.amber,
-        title: const Text("homepage"),
+        title: Text(
+          "Manage Work",
+          style: KTextStyle.K_20,
+        ),
         actions: [
           IconButton(
               onPressed: () {
@@ -47,15 +142,18 @@ class _HomepageScreenState extends State<HomepageScreen> {
               "Hii",
               style: KTextStyle.K_24,
             ),
-            const Text(
-              "Sachin",
-              style: KTextStyle.K_24,
-            ),
+            // const Text(
+            //   "Sachin",
+            //   style: KTextStyle.K_24,
+            // ),
             const Text(
               "Let's begin the Work!",
-              style: KTextStyle.K_18,
+              style: KTextStyle.K_24,
             ),
-            20.heightBox,
+            10.heightBox,
+            Divider(),
+            10.heightBox,
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -67,10 +165,11 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               horizontal: 20.0, vertical: 5),
                           child: Text("Personal"),
                         ),
-                        onTap: () {
+                        onTap: () async {
                           personal = true;
                           office = false;
                           college = false;
+                          await goToTheLoad();
                           setState(() {});
                         },
                       ),
@@ -82,10 +181,12 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               horizontal: 20.0, vertical: 5),
                           child: Text("College"),
                         ),
-                        onTap: () {
+                        onTap: () async {
                           personal = false;
                           office = false;
                           college = true;
+
+                          await goToTheLoad();
                           setState(() {});
                         },
                       ),
@@ -97,34 +198,94 @@ class _HomepageScreenState extends State<HomepageScreen> {
                               horizontal: 20.0, vertical: 5),
                           child: Text("Office"),
                         ),
-                        onTap: () {
+                        onTap: () async {
                           personal = false;
                           office = true;
                           college = false;
+                          await goToTheLoad();
                           setState(() {});
                         },
                       ),
               ],
             ),
             30.heightBox,
-            CheckboxListTile(
-              activeColor: Colors.amber,
-              value: suggest,
-              title: Text("Make Youtube videos"),
-              onChanged: (onChanged) {
-                setState(() {
-                  suggest = onChanged!;
-                });
-              },
-              controlAffinity: ListTileControlAffinity.leading,
-            )
+            // caliing Widget State palce
+            getTask()
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.amber.shade400,
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const CircleAvatar(
+                                  backgroundColor: Colors.amberAccent,
+                                  child: Icon(Icons.close))),
+                          10.widthtBox,
+                          const Text(
+                            "Add ToDo Task",
+                            style: KTextStyle.K_20,
+                          ),
+                        ],
+                      ),
+                      10.heightBox,
+                      const Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Add Task",
+                          style: KTextStyle.K_18,
+                        ),
+                      ),
+                      20.heightBox,
+
+                      KTextformfield(
+                        controller: todoController,
+                      ),
+                      20.heightBox,
+                      RoundButton(
+                          title: "Add Task",
+                          onPress: () {
+                            debugPrint("triggred");
+                            String id = Uuid().v4();
+                            Map<String, dynamic> userTask = {
+                              'task': todoController.text,
+                              'id': id,
+                              'yes': false,
+                              'isDeleted': false,
+                            };
+                            personal
+                                ? DatabaseServices()
+                                    .addPersonalTask(userTask, id)
+                                : college
+                                    ? DatabaseServices()
+                                        .addCollegeTask(userTask, id)
+                                    : DatabaseServices()
+                                        .addOfficeTask(userTask, id);
+                            Navigator.pop(context);
+                          }),
+
+                      // next
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }

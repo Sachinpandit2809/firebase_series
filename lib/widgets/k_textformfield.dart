@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class KTextformfield extends StatefulWidget {
-  String hintText;
+  String? hintText;
   TextEditingController controller;
   TextInputType keyboard;
   KTextformfield(
       {super.key,
       required this.controller,
-      required this.hintText,
+      this.hintText,
       this.keyboard = TextInputType.text});
 
   @override
