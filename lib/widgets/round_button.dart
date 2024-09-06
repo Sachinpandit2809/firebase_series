@@ -7,7 +7,12 @@ import 'package:flutter/material.dart';
 class RoundButton extends StatefulWidget {
   String title;
   VoidCallback onPress;
-   RoundButton({super.key ,required this.title,required this.onPress});
+  bool loading;
+  RoundButton(
+      {super.key,
+      required this.title,
+      required this.onPress,
+      this.loading = false});
 
   @override
   State<RoundButton> createState() => _RoundButtonState();
@@ -17,17 +22,19 @@ class _RoundButtonState extends State<RoundButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:widget. onPress,
+      onTap: widget.onPress,
       child: Container(
         height: 50,
         width: 180,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12), color: Colors.black26),
-        child: Center(
-            child: Text(
-         widget.title,
-          style: KTextStyle.K_16,
-        )),
+        child: widget.loading
+            ? const Center(child: CircularProgressIndicator())
+            : Center(
+                child: Text(
+                widget.title,
+                style: KTextStyle.K_16,
+              )),
       ),
     );
   }

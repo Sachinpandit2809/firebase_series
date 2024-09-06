@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 class HomeScreenController with ChangeNotifier {
   bool personal = true, office = false, college = false;
   Stream? todoStream;
+ 
 
   Future goToTheLoad() async {
     todoStream = await DatabaseServices().getTask(personal
@@ -38,6 +39,7 @@ class HomeScreenController with ChangeNotifier {
                     DocumentSnapshot documentSnapshot =
                         snapshot.data.docs[index];
                     return Container(
+                      margin: EdgeInsets.symmetric(vertical: 5),
                       decoration: BoxDecoration(
                           color: Colors.amber.shade100,
                           borderRadius: BorderRadius.circular(12)),
@@ -83,5 +85,29 @@ class HomeScreenController with ChangeNotifier {
             : SizedBox();
       },
     );
+  }
+
+  void personalTrueSelecter() async {
+    personal = true;
+    office = false;
+    college = false;
+    await goToTheLoad();
+    notifyListeners();
+  }
+
+  void collegeTrueSelecter() async {
+    personal = false;
+    office = false;
+    college = true;
+    await goToTheLoad();
+    notifyListeners();
+  }
+
+  void officeTrueSelecter() async {
+    personal = false;
+    office = true;
+    college = false;
+    await goToTheLoad();
+    notifyListeners();
   }
 }

@@ -25,3 +25,21 @@ class CustomMaterialButtons extends StatelessWidget {
     );
   }
 }
+
+class CustomAlternateMaterialButton extends StatelessWidget {
+  String title;
+  VoidCallback onPress;
+  CustomAlternateMaterialButton(
+      {super.key, required this.title, required this.onPress});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPress,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
+        child: Text(title),
+      ),
+    );
+  }
+}

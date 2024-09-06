@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_series/controller/login_screen_controller.dart';
 import 'package:firebase_series/utils/utils.dart';
 
 class FirebaseServices {
@@ -26,8 +27,10 @@ class FirebaseServices {
     } on FirebaseException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'wrong-password') {
         Utils().toastErrorMessage("Invalid email and password!");
+        // LoginScreenController().setLoging(false);
       } else {
         Utils().toastErrorMessage("Some error occured ${e.code}");
+        // LoginScreenController().setLoging(false);
       }
     }
     return null;
